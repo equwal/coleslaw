@@ -36,12 +36,13 @@ date:
 
 ## TODO
 
-* Insert automatically `format: `, `title: `, and `url: ` with `M-;`.
+* Insert automatically `format:`, `title:`, and `url:` with `M-;`.
 * Only use markdown-mode if `format: md` is used.
 * Setup a lispy mode if `format: cl-who` is used.
 * Setup a **LaTeX** mode if..., etc.
-* Bind emacs commands for interacting with coleslaw
+* Bind emacs commands for interacting with coleslaw via [slime][slime].
 
+[slime]: https://common-lisp.net/project/slime/
 [Flyspell]: https://www.emacswiki.org/emacs/FlySpell
 [Coleslaw]: https://github.com/kingcons/coleslaw
 [eww]: https://github.com/niku/markdown-preview-eww
