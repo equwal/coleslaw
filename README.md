@@ -4,7 +4,7 @@ COLESLAW-MODE
 ## An Emacs Minor Mode For [Coleslaw][Coleslaw]
 ---
 (Notice: very early prototype. Very few features.)
-## Features:
+## Features
 * `coleslaw-insert-header` inserts the comment block at the top of the page like this:
 ```
 ;;;;;
@@ -15,7 +15,7 @@ date:
 ;;;;;
 ```
 * `markdown-preview-eww` might be used to view realtime markup.
-## Install:
+## Install
 1. Clone in your `~/.emacs.d/` or equivalent staging area.
 * Add this line to your init file (maybe at `~/.emacs.d/init.el`). This assumes that you cloned into `~/.emacs.d/`, change it to fit.
 
@@ -25,14 +25,14 @@ date:
 
 	```
 
-* ## Install optional dependencies.
+* ## Install optional dependencies
 
 * For markdown syntax highlighting, [markdown-mode][markdown-mode]. 
 * For a preview of the markdown, [markdown-preview-eww][eww], and the web browser it is setup to use, [w3m][w3m]
 * Note that [eww][eww] has special OS level dependencies.
 4. Open a `.page` or `.post` file in emacs!
 
-## TODO:
+## TODO
 
 * Insert automatically `format: `, `title: `, and `url: ` with `M-;`.
 * Only use markdown-mode if `format: md` is used.
