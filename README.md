@@ -25,7 +25,7 @@ date:
 
 	```
 
-* ## Install dependencies from MELPA
+* ## Install optional dependencies.
 
 * For markdown syntax highlighting, [markdown-mode][markdown-mode]. 
 * For a preview of the markdown, [markdown-preview-eww][eww], and the web browser it is setup to use, [w3m][w3m]
