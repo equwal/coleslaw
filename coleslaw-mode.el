@@ -15,10 +15,10 @@
 (defvar coleslaw-mode-map
   (let ((map (make-keymap)))
     (defkeys map
-      "H-c" 'markdown-preview-cleanup)
+      "H-c" 'markdown-preview-eww)
     map)
   "Keymap for COLESLAW major mode")
-(define-derived-mode coleslaw-mode fundamental-mode "COLESLAW"
+(defun coleslaw-mode ()
   "Major mode for editing coleslaw site generation files."
   (interactive)
   (kill-all-local-variables)
@@ -31,8 +31,6 @@
   (setq major-mode 'coleslaw-mode)
   (setq mode-name "COLESLAW")
   (run-hooks 'coleslaw-mode-hook))
-(add-to-list 'auto-mode-alist '("\\.page\\'" . flyspell-mode))
-(add-to-list 'auto-mode-alist '("\\.post\\'" . flyspell-mode))
 (add-to-list 'auto-mode-alist '("\\.page\\'" . coleslaw-mode))
 (add-to-list 'auto-mode-alist '("\\.post\\'" . coleslaw-mode))
 (provide 'coleslaw-mode)
@@ -42,8 +40,7 @@
 (require 'w3m)
 (setq browse-url-browser-function 'w3m-goto-url)
 (autoload 'markdown-mode "markdown-mode"
-   "Major mode for editing Markdown files" t)
-(add-to-list 'auto-mode-alist '("\\.page\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.post\\'" . markdown-mode))
-(add-to-list 'auto-mode-alist '("\\.page\\'" . markdown-preview-eww))
-(add-to-list 'auto-mode-alist '("\\.post\\'" . markdown-preview-eww))
+  "Major mode for editing Markdown files" t)
+(autoload 'markdown-preview-eww "view markdown in w3m web browser." t)
+(add-hook 'coleslaw-mode-hook 'flyspell-mode)
+(add-hook 'coleslaw-mode-hook 'markdown-mode)
