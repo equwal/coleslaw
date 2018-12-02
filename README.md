@@ -5,7 +5,9 @@ COLESLAW-MODE
 ---
 (Notice: very early prototype. Very few features.)
 ## Features
+* `.page` and `.post` files automatically have [Fly Spell][Flyspell] spell checking and [Markdown major mode][markdown-mode] enabled.
 * `coleslaw-insert-header` inserts the comment block at the top of the page like this:
+
 ```
 ;;;;;
 title: 
@@ -40,6 +42,7 @@ date:
 * Setup a **LaTeX** mode if..., etc.
 * Bind emacs commands for interacting with coleslaw
 
+[Flyspell]: https://www.emacswiki.org/emacs/FlySpell
 [Coleslaw]: https://github.com/kingcons/coleslaw
 [eww]: https://github.com/niku/markdown-preview-eww
 [w3m]: https://www.emacswiki.org/emacs/emacs-w3m

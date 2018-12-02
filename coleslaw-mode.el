@@ -32,12 +32,14 @@ date:
     (define-key map (kbd "C-j") 'coleslaw-indent)
     map)
   "Keymap for COLESLAW major mode")
-(define-derived-mode coleslaw-mode markdown "COLESLAW" 
+(defun coleslaw-mode ()
   "Mode for editing coleslaw site generation files."
   (interactive)
   (kill-all-local-variables)
   (use-local-map coleslaw-mode-map)
   (add-hook 'coleslaw-mode-hook 'flyspell-mode)
+  (add-hook 'coleslaw-mode-hook 'markdown-live-preview-mode)
+  (add-hook 'coleslaw-mode-hook 'markdown-mode)
   ;(add-hook 'coleslaw-mode-hook 'markdown-mode)
   (setq minor-mode 'coleslaw-mode)
   (setq mode-name "COLESLAW")
