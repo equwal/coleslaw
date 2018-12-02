@@ -9,38 +9,45 @@
                    (nreverse
                      (cons source acc))))))
     (if source (rec source nil) nil)))
-(defun defkeys (map &rest (key-fn-ps))
-  (dolist (p (group key-fn-ps 2) (funcall #'define-key (car p) (cadr p))) ))
+
+(defmacro defkeys (map &rest (key-fn-ps))
+  `(dolist ((p (group ',key-fn-ps 2))
+	    (define-key (kbd ,(car p)) ',(cadr p)))))
+
 (defvar coleslaw-mode-hook nil)
+(defun coleslaw-indent ()
+  (interactive)
+  (beginning-of-line))
+(defun coleslaw-insert-header ()
+  (insert ";;;;; 
+title: 
+url: 
+format: 
+date: 
+;;;;;"))
 (defvar coleslaw-mode-map
-  (let ((map (make-keymap)))
-    (defkeys map
-      "H-c" 'markdown-preview-eww)
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "H-c") 'markdown-preview-eww)
+    (define-key map (kbd "M-;") 'coleslaw-insert-header)
+    (define-key map (kbd "C-j") 'coleslaw-indent)
     map)
   "Keymap for COLESLAW major mode")
-(defun coleslaw-mode ()
-  "Major mode for editing coleslaw site generation files."
+(define-derived-mode coleslaw-mode markdown "COLESLAW" 
+  "Mode for editing coleslaw site generation files."
   (interactive)
   (kill-all-local-variables)
-  ;; (set-syntax-table coleslaw-mode-syntax-table)
-  (setq-local comment-start ";;;;;
-")
-  (setq-local comment-end "
-;;;;;")
   (use-local-map coleslaw-mode-map)
-  (setq major-mode 'coleslaw-mode)
+  (add-hook 'coleslaw-mode-hook 'flyspell-mode)
+  ;(add-hook 'coleslaw-mode-hook 'markdown-mode)
+  (setq minor-mode 'coleslaw-mode)
   (setq mode-name "COLESLAW")
   (run-hooks 'coleslaw-mode-hook))
 (add-to-list 'auto-mode-alist '("\\.page\\'" . coleslaw-mode))
 (add-to-list 'auto-mode-alist '("\\.post\\'" . coleslaw-mode))
 (provide 'coleslaw-mode)
 ;; Should not to require these in case cl-who or otherwise is wanted, once it is implemented.
-(require 'markdown-preview-eww)
-(require 'markdown-mode)
-(require 'w3m)
 (setq browse-url-browser-function 'w3m-goto-url)
-(autoload 'markdown-mode "markdown-mode"
-  "Major mode for editing Markdown files" t)
-(autoload 'markdown-preview-eww "view markdown in w3m web browser." t)
-(add-hook 'coleslaw-mode-hook 'flyspell-mode)
-(add-hook 'coleslaw-mode-hook 'markdown-mode)
+(autoload 'markdown-mode "markdown-mode"			       
+  "Major mode for editing Markdown files")			       
+(autoload 'markdown-preview-eww "view markdown in w3m web browser.") 
+
