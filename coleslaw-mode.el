@@ -27,7 +27,7 @@ date:
 ;;;;;"))
 (defvar coleslaw-mode-map
   (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "H-c") 'markdown-preview-eww)
+    (define-key map (kbd "H-c") 'markdown-live-preview)
     (define-key map (kbd "M-;") 'coleslaw-insert-header)
     (define-key map (kbd "C-j") 'coleslaw-indent)
     map)
