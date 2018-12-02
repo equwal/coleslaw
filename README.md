@@ -22,10 +22,13 @@ COLESLAW-MODE
 (add-to-list 'load-path "~/.emacs.d/coleslaw-mode/")
 
 ```
-3. For markdown syntax highlighting, `markdown-mode` must be installed from MELPA.
-4. For a preview of the markdown, `markdown-preview-mode` must be installed, along with a bash shell 
-command, `markdown`. 
-5. Open a `.page` or `.post` file in emacs!
+3. **Install dependencies from MELPA**
+   * For markdown syntax highlighting, [`markdown-mode`][markdown-mode].
+For a preview of the markdown, [`markdown-preview-eww`][eww], and the web browser it is setup to use, [w3m][w3m]
+	[eww]: https://github.com/niku/markdown-preview-eww
+	[w3m]: https://www.emacswiki.org/emacs/emacs-w3m
+	[markdown-mode]: https://jblevins.org/projects/markdown-mode/
+4. Open a `.page` or `.post` file in emacs!
 
 ## TODO:
 
