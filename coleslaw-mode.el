@@ -10,8 +10,10 @@
                      (cons source acc))))))
     (if source (rec source nil) nil)))
 (defmacro defkeys (map &rest (key-fn-ps))
-  `(dolist ((p (group ',key-fn-ps 2))
-	    (define-key (kbd ,(car p)) ',(cadr p)))))
+  (let ((a (gensym)))
+    `(let ((,a ,map))
+       (dolist ((p (group ',key-fn-ps 2) ,a)
+		(define-key ,a (kbd ,(car p)) ',(cadr p)))))))
 
 (defvar coleslaw-mode-hook nil)
 (defun coleslaw-insert-header ()
@@ -23,9 +25,7 @@ format:
 date: 
 ;;;;;"))
 (defvar coleslaw-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "M-;") 'coleslaw-insert-header)
-    map)
+  (defkeys (make-sparse-keymap) "M-;" coleslaw-insert-header)
   "Keymap for COLESLAW major mode")
 (defun coleslaw-mode ()
   "Mode for editing coleslaw site generation files."
