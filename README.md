@@ -19,7 +19,7 @@ date:
 * `markdown-preview-eww` might be used to view realtime markup.
 ## Install
 1. Clone in your `~/.emacs.d/` or equivalent staging area.
-* Add this line to your init file (maybe at `~/.emacs.d/init.el`). This assumes that you cloned into `~/.emacs.d/`, change it to fit.
+* Add this line to your init file (maybe at `~/.emacs.d/init.el`). This assumes that you cloned into `~/.emacs.d/`; change it to fit.
 
 	```
 
