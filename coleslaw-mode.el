@@ -20,6 +20,7 @@
   (string-equal type (subseq buffer-file-name (- (length buffer-file-name) 5))))
 (defun coleslaw-insert-header ()
   (interactive)
+  (beginning-of-buffer)
   (if (bufftype ".post")
       (insert ";;;;;
 title: 
