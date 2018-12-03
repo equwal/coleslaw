@@ -16,14 +16,23 @@
 		(define-key ,a (kbd ,(car p)) ',(cadr p)))))))
 
 (defvar coleslaw-mode-hook nil)
+(defun bufftype (type)
+  (string-equal type (subseq buffer-file-name (- (length buffer-file-name) 5))))
 (defun coleslaw-insert-header ()
   (interactive)
-  (insert ";;;;;
+  (if (bufftype ".post")
+      (insert ";;;;;
+title: 
+format: 
+date: 
+;;;;;")
+    (if (bufftype ".page")
+	(insert ";;;;;
 title: 
 url: 
 format: 
 date: 
-;;;;;"))
+;;;;;"))))
 (defvar coleslaw-mode-map
   (defkeys (make-sparse-keymap) "M-;" coleslaw-insert-header)
   "Keymap for COLESLAW major mode")

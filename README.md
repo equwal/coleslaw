@@ -5,18 +5,19 @@ COLESLAW-MODE
 ---
 (Notice: very early prototype. Very few features.)
 ## Features
-* `.page` and `.post` files automatically have [Fly Spell][Flyspell] spell checking and [Markdown major mode][markdown-mode] enabled.
-* `coleslaw-insert-header` inserts the comment block at the top of the page like this:
+* `.page` and `.post` files automatically enable coleslaw-mode. 
+* [Fly Spell][Flyspell] spell checking and [Markdown major mode][markdown-mode] enabled.
+* `coleslaw-insert-header` (bound to `M-;`) inserts the comment block *depending on the type of file*. A `*.post` file would insert:
 
 ```
 ;;;;;
 title: 
-url: 
 format: 
 date: 
 ;;;;;
 ```
-* `markdown-preview-eww` might be used to view realtime markup.
+
+* [Markdown-preview-eww][eww] automatically opens a markdown preview on loadup of a coleslaw-mode file.
 ## Install
 1. Clone in your `~/.emacs.d/` or equivalent staging area.
 * Add this line to your init file (maybe at `~/.emacs.d/init.el`). This assumes that you cloned into `~/.emacs.d/`; change it to fit.
@@ -30,14 +31,13 @@ date:
 * ## Install optional dependencies
 
 * For markdown syntax highlighting, [markdown-mode][markdown-mode]. 
-* For a preview of the markdown, [markdown-preview-eww][eww], and the web browser it is setup to use, [w3m][w3m]
+* For a preview of the markdown, [markdown-preview-eww][eww].
 * Note that [eww][eww] has special OS level dependencies.
-4. Open a `.page` or `.post` file in emacs!
+* Open a `.page` or `.post` file in emacs!
 
 ## TODO
 
-* Insert automatically `format:`, `title:`, and `url:` with `M-;`.
-* Only use markdown-mode if `format: md` is used.
+* Only use markdown-mode and eww preview if `format: md` is used.
 * Setup a lispy mode if `format: cl-who` is used.
 * Setup a **LaTeX** mode if..., etc.
 * Bind emacs commands for interacting with coleslaw via [slime][slime].
@@ -46,5 +46,4 @@ date:
 [Flyspell]: https://www.emacswiki.org/emacs/FlySpell
 [Coleslaw]: https://github.com/kingcons/coleslaw
 [eww]: https://github.com/niku/markdown-preview-eww
-[w3m]: https://www.emacswiki.org/emacs/emacs-w3m
 [markdown-mode]: https://jblevins.org/projects/markdown-mode/
