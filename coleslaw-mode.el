@@ -8,12 +8,13 @@
                                acc))
                    (nreverse
                      (cons source acc))))))
-    (if source (rec source nil) nil)))
-(defmacro defkeys (map &rest (key-fn-ps))
-  (let ((a (gensym)))
-    `(let ((,a ,map))
-       (dolist ((p (group ',key-fn-ps 2) ,a)
-		(define-key ,a (kbd ,(car p)) ',(cadr p)))))))
+    (if ps (rec ps nil) nil)))
+;; (defmacro defkeys (map &rest (key-fn-ps))
+;;   (let ((a (gensym)))
+;;     `(let ((,a ,map))
+;;        (dolist ((p (group ',key-fn-ps 2)))
+;; 	 (define-key ,a (kbd ,(car p)) ',(cadr p)))
+;;        ,a)))
 
 (defvar coleslaw-mode-hook nil)
 (defun bufftype (type)
@@ -22,20 +23,32 @@
   (interactive)
   (beginning-of-buffer)
   (if (bufftype ".post")
-      (insert ";;;;;
+      (progn (insert ";;;;;
 title: 
 format: 
 date: 
-;;;;;")
+;;;;;
+<!--more-->
+
+<!--more-->
+")
+	     (beginning-of-buffer)
+	     (next-line)
+	     (move-end-of-line))
     (if (bufftype ".page")
-	(insert ";;;;;
+	(progn (insert ";;;;;
 title: 
 url: 
 format: 
 date: 
-;;;;;"))))
+;;;;;")
+	       (beginning-of-buffer)
+	       (next-line)
+	       (move-end-of-line)))))
 (defvar coleslaw-mode-map
-  (defkeys (make-sparse-keymap) "M-;" coleslaw-insert-header)
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "M-;") 'coleslaw-insert-header)
+    map)
   "Keymap for COLESLAW major mode")
 (defun coleslaw-mode ()
   "Mode for editing coleslaw site generation files."

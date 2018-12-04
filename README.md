@@ -15,6 +15,9 @@ title:
 format: 
 date: 
 ;;;;;
+<!--more-->
+
+<!--more-->
 ```
 
 * [Markdown-preview-eww][eww] automatically opens a markdown preview on loadup of a coleslaw-mode file.
