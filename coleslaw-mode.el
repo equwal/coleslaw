@@ -9,42 +9,45 @@
                    (nreverse
                      (cons source acc))))))
     (if ps (rec ps nil) nil)))
-;; (defmacro defkeys (map &rest (key-fn-ps))
-;;   (let ((a (gensym)))
-;;     `(let ((,a ,map))
-;;        (dolist ((p (group ',key-fn-ps 2)))
-;; 	 (define-key ,a (kbd ,(car p)) ',(cadr p)))
-;;        ,a)))
-
 (defvar coleslaw-mode-hook nil)
 (defun bufftype (type)
   (string-equal type (subseq buffer-file-name (- (length buffer-file-name) 5))))
-(defun coleslaw-insert-header ()
-  (interactive)
+(defun coleslaw-insert-header (format)
+  (interactive "Sformat: ")
   (beginning-of-buffer)
   (if (bufftype ".post")
-      (progn (insert ";;;;;
+      (progn (insert (concatenate 'string
+                                  ";;;;;
 title: 
-format: 
+format: "
+                                  format
+                                  "
 date: 
 ;;;;;
 <!--more-->
 
 <!--more-->
-")
-	     (beginning-of-buffer)
-	     (next-line)
-	     (move-end-of-line))
+"))
+             (beginning-of-buffer)
+             (next-line)
+             (move-end-of-line 1))
     (if (bufftype ".page")
-	(progn (insert ";;;;;
+        (progn (insert (concatenate 'string
+                                    ";;;;;
 title: 
 url: 
-format: 
+format: "
+                                    format
+                                    "
 date: 
-;;;;;")
-	       (beginning-of-buffer)
+;;;;;"))
+               (beginning-of-buffer)
 	       (next-line)
-	       (move-end-of-line)))))
+	       (move-end-of-line)
+               (cond ((string-equal (symbol-name format) "md") (markdown-mode))
+                     ((string-equal (symbol-name format) "cl-who") (lisp-mode))
+                     ((string-equal (symbol-name format) "html") (html-mode))
+                     ((string-equal (symbol-name format) "rst") (markdown-mode)))))))
 (defvar coleslaw-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-;") 'coleslaw-insert-header)
