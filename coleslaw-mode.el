@@ -32,7 +32,7 @@
   "Spawn a skeleton as specified by default for a coleslaw file type.
 Automatically changes the mode.  FORMAT is filled into the
 skeleton and used to select the mode"
-  (interactive "Sformat: ")
+  (interactive "sformat: ")
   (beginning-of-buffer)
   (if (bufftype ".post")
       (progn (insert (concatenate
@@ -65,13 +65,13 @@ date:
       (beginning-of-buffer)
       (forward-line)
       (move-end-of-line)
-      (cond ((string-equal (symbol-name format) "md")
+      (cond ((string-equal format "md")
              (markdown-mode))
-            ((string-equal (symbol-name format) "cl-who")
+            ((string-equal format "cl-who")
              (lisp-mode))
-            ((string-equal (symbol-name format) "html")
+            ((string-equal format "html")
              (html-mode))
-            ((string-equal (symbol-name format) "rst")
+            ((string-equal format "rst")
              (markdown-mode))))))
 (defvar coleslaw-mode-map
   (let ((map (make-sparse-keymap)))
