@@ -37,10 +37,12 @@ date:
 
 * ## Install optional dependencies
 
-* For markdown syntax highlighting, [markdown-mode][markdown-mode]. 
+* For markdown syntax highlighting, [markdown-mode][markdown-mode].
 * For a preview of the markdown, [markdown-preview-eww][eww].
 * Note that [eww][eww] has special OS level dependencies.
 * Open a `.page` or `.post` file in emacs!
+* You might want to view the [eww][eww] preview with `w3m`. If so, use:
+`(setq browse-url-browser-function 'w3m-goto-url)`
 
 ## TODO
 

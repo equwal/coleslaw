@@ -1,12 +1,31 @@
+;;; coleslaw-mode.el --- Mode for HTML static content generation with Coleslaw
+
+;; Copyright (C) 2018 Spenser Truex
+;; Author: Your Name <yourname@example.com>
+;; Created: Equwal 2018-12-09
+;; Version: 1.0
+;; Keywords: Coleslaw Static Content Mode with Skeleton Comment
+;; URL: https://github.com/equwal/coleslaw-mode/
+;; Homepage: http://truex.eu
+;; This file is not part of GNU Emacs.
+;; This file is free software licensed with the GNU GPL v3 see
+;; <https://www.gnu.org/licenses/>.
+;;; Commentary: `coleslaw-insert-header` (bound to `M-;`) inserts the
+;;; comment block depending on the type of file, and is how the major mode
+;;; is selected for the file. Meant to work for all formats supported by
+;;; kingcons's "coleslaw" static content generator.
+
+;;; Code:
+
 (defun group (ps n)
   (if (zerop n) (error "zero length"))
   (labels ((rec (source acc)
-             (let ((rest (nthcdr n source)))
-               (if (consp rest)
-                   (rec rest (cons
-                               (subseq source 0 n)
-                               acc))
-                   (nreverse
+                (let ((rest (nthcdr n source)))
+                  (if (consp rest)
+                      (rec rest (cons
+                                 (subseq source 0 n)
+                                 acc))
+                    (nreverse
                      (cons source acc))))))
     (if ps (rec ps nil) nil)))
 (defvar coleslaw-mode-hook nil)
@@ -69,8 +88,8 @@ date:
 (add-to-list 'auto-mode-alist '("\\.post\\'" . coleslaw-mode))
 (provide 'coleslaw-mode)
 ;; Should not to require these in case cl-who or otherwise is wanted, once it is implemented.
-(setq browse-url-browser-function 'w3m-goto-url)
-(autoload 'markdown-mode "markdown-mode"			       
-  "Major mode for editing Markdown files")			       
-(autoload 'markdown-preview-eww "view markdown in w3m web browser.") 
+(autoload 'markdown-mode "markdown-mode"
+  "Major mode for editing Markdown files")
+(autoload 'markdown-preview-eww "view markdown in w3m web browser.")
 
+;;; coleslaw.el ends here
