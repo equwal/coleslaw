@@ -5,6 +5,7 @@
 ;; Author: Spenser Truex <spensertruexonline@example.com>
 ;; Created: Equwal 2018-12-09
 ;; Version:  1.1.0
+;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
 ;; URL: https://github.com/equwal/coleslaw-mode/
 ;; Homepage: http://truex.eu
