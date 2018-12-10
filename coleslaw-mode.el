@@ -49,7 +49,8 @@ date:
                            (if (coleslaw-bufftype ".post")
                                "<!--more-->
 
-<!--more-->" "")))))
+<!--more-->" "")))
+    ret))
 (defun coleslaw-insert-header ()
   "Spawn a skeleton as specified by default for a coleslaw file type.
 Automatically changes the mode.  FORMAT is filled into the
