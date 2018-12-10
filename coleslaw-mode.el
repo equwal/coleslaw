@@ -1,5 +1,4 @@
--*- lexical-binding: t; -*-
-;;; coleslaw-mode.el --- Coleslaw static content files.
+;;; coleslaw-mode.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <spensertruexonline@example.com>
