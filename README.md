@@ -47,6 +47,7 @@ date:
 ## TODO
 
 * Bind emacs commands for interacting with coleslaw via [slime][slime].
+* Change mode according to the `format: ` line when a file is opened and has the line.
 
 [slime]: https://common-lisp.net/project/slime/
 [Flyspell]: https://www.emacswiki.org/emacs/FlySpell
