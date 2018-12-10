@@ -18,7 +18,7 @@
 ;; coleslaw-insert-header (bound to M-;) inserts the comment block
 ;; depending on the type of file, and is how the major mode is selected for
 ;; the file.  Meant to work for all formats supported by kingcons's
-;; "coleslaw" static content generator. Default enabled in .page and .post
+;; "coleslaw" static content generator.  Default enabled in .page and .post
 ;; files.
 
 ;;; Code:
@@ -37,18 +37,31 @@ skeleton and used to select the mode"
   (if (bufftype ".post")
       (progn (insert (concatenate
                       'string
-                      ";;;;;\title: \format: "
+                      ";;;;;
+title: 
+format: "
                       format
-                      "\date: \;;;;;\<!--more-->\\<!--more-->\"))
+                      "
+date: 
+;;;;;
+<!--more-->
+
+<!--more-->
+"))
              (beginning-of-buffer)
              (forward-line)
              (move-end-of-line 1))
     (when (bufftype ".page")
       (insert (concatenate
                'string
-               ";;;;;\title: \url: \format: "
+               ";;;;;
+title: 
+url: 
+format: "
                format
-               "\date: \;;;;;"))
+               "
+date: 
+;;;;;"))
       (beginning-of-buffer)
       (forward-line)
       (move-end-of-line)
