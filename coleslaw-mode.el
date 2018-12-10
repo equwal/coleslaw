@@ -64,7 +64,7 @@ date:
 ;;;;;"))
       (beginning-of-buffer)
       (forward-line)
-      (move-end-of-line)
+      (move-end-of-line 1)
       (cond ((string-equal format "md")
              (markdown-mode))
             ((string-equal format "cl-who")
