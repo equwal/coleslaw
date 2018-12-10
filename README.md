@@ -5,19 +5,24 @@ COLESLAW-MODE
 ---
 (Notice: very early prototype. Very few features.)
 ## Features
-* `.page` and `.post` files automatically enable coleslaw-mode. 
-* [Fly Spell][Flyspell] spell checking and [Markdown major mode][markdown-mode] enabled.
-* `coleslaw-insert-header` (bound to `M-;`) inserts the comment block *depending on the type of file*. A `*.post` file would insert:
-
+* `coleslaw-insert-header` (bound to `M-;`) inserts the comment block
+  *depending on the type of file*, and *is how the major mode is selected
+  for the file*.
+* A `*.post` file would insert:
 ```
 ;;;;;
-title: 
-format: 
-date: 
+title:
+format:
+date:
 ;;;;;
 <!--more-->
 
 <!--more-->
+
+```
+
+* `.page` and `.post` files automatically enable coleslaw-mode in emacs.
+* [Fly Spell][Flyspell] spell checking and [Markdown major mode][markdown-mode] enabled.
 ```
 
 * [Markdown-preview-eww][eww] automatically opens a markdown preview on loadup of a coleslaw-mode file.
@@ -40,9 +45,6 @@ date:
 
 ## TODO
 
-* Only use markdown-mode and eww preview if `format: md` is used.
-* Setup a lispy mode if `format: cl-who` is used.
-* Setup a **LaTeX** mode if..., etc.
 * Bind emacs commands for interacting with coleslaw via [slime][slime].
 
 [slime]: https://common-lisp.net/project/slime/
