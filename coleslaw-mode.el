@@ -1,7 +1,7 @@
 ;;; coleslaw-mode.el --- Mode for HTML static content generation with Coleslaw
 
 ;; Copyright (C) 2018 Spenser Truex
-;; Author: Your Name <yourname@example.com>
+;; Author: Spenser Truex <spensertruexonline@example.com>
 ;; Created: Equwal 2018-12-09
 ;; Version: 1.0
 ;; Keywords: Coleslaw Static Content Mode with Skeleton Comment
