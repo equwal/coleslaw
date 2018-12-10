@@ -2,8 +2,8 @@ COLESLAW-MODE
 ==========
 
 ## An Emacs Minor Mode For [Coleslaw][Coleslaw]
----
-(Notice: very early prototype. Very few features.)
+
+
 ## Features
 * `coleslaw-insert-header` (bound to `M-;`) inserts the comment block
   *depending on the type of file*, and *is how the major mode is selected
@@ -23,7 +23,6 @@ date:
 
 * `.page` and `.post` files automatically enable coleslaw-mode in emacs.
 * [Fly Spell][Flyspell] spell checking and [Markdown major mode][markdown-mode] enabled.
-```
 
 * [Markdown-preview-eww][eww] automatically opens a markdown preview on loadup of a coleslaw-mode file.
 ## Install
