@@ -34,7 +34,7 @@ Automatically changes the mode.  FORMAT is filled into the
 skeleton and used to select the mode"
   (interactive "sformat: ")
   (beginning-of-buffer)
-  (if (bufftype ".post")
+  (if (coleslaw-bufftype ".post")
       (progn (insert (concatenate
                       'string
                       ";;;;;
@@ -51,7 +51,7 @@ date:
              (beginning-of-buffer)
              (forward-line)
              (move-end-of-line 1))
-    (when (bufftype ".page")
+    (when (coleslaw-bufftype ".page")
       (insert (concatenate
                'string
                ";;;;;
