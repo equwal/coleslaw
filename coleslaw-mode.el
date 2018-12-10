@@ -24,55 +24,47 @@
 ;;; Code:
 
 (defvar coleslaw-mode-hook nil)
+(defun format-prompt (format)
+  (interactive "sformat: ")
+  format)
 (defun coleslaw-bufftype (type)
   "Determine if the file type of the current buffer is TYPE."
   (string-equal type (subseq buffer-file-name (- (length buffer-file-name) 5))))
 ;;;###autoload
-(defun coleslaw-insert-header (format)
+(defun coleslaw-skeleton-insert ()
+  "Insert the skeleton for this type of file with FORMAT filled in."
+                                        ;  (beginning-of-buffer)
+  (let ((ret nil))
+    (skeleton-insert '(nil ";;;;;
+title: 
+format: "
+                           (setq ret (skeleton-read "format: "))
+                           (if (coleslaw-bufftype ".page")
+                               "
+url: " "")
+                           "
+date: 
+;;;;;
+"
+                           (if (coleslaw-bufftype ".post")
+                               "<!--more-->
+
+<!--more-->" "")))))
+(defun coleslaw-insert-header ()
   "Spawn a skeleton as specified by default for a coleslaw file type.
 Automatically changes the mode.  FORMAT is filled into the
 skeleton and used to select the mode"
-  (interactive "sformat: ")
-  (beginning-of-buffer)
-  (if (coleslaw-bufftype ".post")
-      (progn (insert (concatenate
-                      'string
-                      ";;;;;
-title: 
-format: "
-                      format
-                      "
-date: 
-;;;;;
-<!--more-->
-
-<!--more-->
-"))
-             (beginning-of-buffer)
-             (forward-line)
-             (move-end-of-line 1))
-    (when (coleslaw-bufftype ".page")
-      (insert (concatenate
-               'string
-               ";;;;;
-title: 
-url: 
-format: "
-               format
-               "
-date: 
-;;;;;"))
-      (beginning-of-buffer)
-      (forward-line)
-      (move-end-of-line 1)
-      (cond ((string-equal format "md")
-             (markdown-mode))
-            ((string-equal format "cl-who")
-             (lisp-mode))
-            ((string-equal format "html")
-             (html-mode))
-            ((string-equal format "rst")
-             (markdown-mode))))))
+  (let ((format (coleslaw-skeleton-insert)))
+   (cond ((string-equal format "md")
+          (markdown-mode))
+         ((string-equal format "cl-who")
+          (lisp-mode))
+         ((string-equal format "html")
+          (html-mode))
+         ((string-equal format "rst")
+          (markdown-mode))))
+  (forward-line)
+  (move-end-of-line 1))
 (defvar coleslaw-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "M-;") 'coleslaw-insert-header)
@@ -93,12 +85,15 @@ date:
   (use-local-map coleslaw-mode-map))
 (add-to-list 'auto-mode-alist '("\\.page\\'" . coleslaw-mode))
 (add-to-list 'auto-mode-alist '("\\.post\\'" . coleslaw-mode))
+(setf auto-insert t)
+(pushnew (cons ".page" 'coleslaw-insert-header) auto-insert-alist)
+(pushnew (cons ".post" 'coleslaw-insert-header) auto-insert-alist)
+(add-hook 'coleslaw-mode-hook 'auto-insert)
 (provide 'coleslaw-mode)
 ;; Should not to require these in case cl-who or otherwise is wanted, once it is implemented.
 (autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files")
 (autoload 'markdown-preview-eww "view markdown in w3m web browser.")
-
 (provide 'coleslaw-mode)
 
 ;;; coleslaw-mode.el ends here
