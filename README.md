@@ -7,7 +7,7 @@ COLESLAW-MODE
 ## Features
 * `coleslaw-insert-header` (bound to `M-;`) inserts the comment block
   *depending on the type of file*, and *is how the major mode is selected
-  for the file*. Empty `.page` and `.post` files automatically call this skeleton generator.
+  for the file*.
 * A `*.post` file would insert:
 ```
 ;;;;;
