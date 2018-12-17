@@ -1,6 +1,8 @@
 * COLESLAW
 * An Emacs Minor Mode For [[https://github.com/kingcons/coleslaw][Coleslaw]], static content generator written in Common Lisp.
-
+** Setup
+Please add this to your init file.
+=(coleslaw-setup)=
 ** Features
 -  Automatically insert a header when opening new =.page= or =.post= files.
 -  `coleslaw-insert-header` (bound to =M-;=) inserts the comment block and *is
