@@ -15,16 +15,75 @@
 ;; <https://www.gnu.org/licenses/>.
 
 ;;; Commentary:
-;; coleslaw-insert-header (bound to M-;) inserts the comment block
-;; depending on the type of file, and is how the major mode is selected for
-;; the file.  Meant to work for all formats supported by kingcons's
-;; "coleslaw" static content generator.  Default enabled in .page and .post
-;; files.  Automagically generates headers when opening new empty coleslaw files.
+;; Please add (coleslaw-setup) to your init file.
+
+;; For the coleslaw static content generator, a minor mode which inserts the
+;; header, selects the major mode, and generally makes writing static content
+;; easier.
 
 ;;; Code:
 
 (defvar coleslaw-mode-hook nil)
-(require 'autoinsert)
+
+(defvar coleslaw-mode-map
+  (make-sparse-keymap)
+  "Keymap for COLESLAW major mode.")
+
+(defvar coleslaw--auto-insert nil
+  "Whether to auto insert coleslaw header in new files.")
+(defvar coleslaw--markdown-mode nil
+  "Whether to enable markdown in coleslaw format: md files.")
+(defvar coleslaw--markdown-live nil
+  "Whether to enable live markdown preview in coleslaw format: md files.")
+(defvar coleslaw--html-mode nil
+  "Whether to enable live markdown preview in coleslaw format: html files.")
+(defvar coleslaw--lisp-mode nil
+  "Whether to enable Lisp mode markdown preview in coleslaw format: cl-who files.")
+(defvar coleslaw--rst-mode nil
+  "Whether to enable ReSTructured text mode in coleslaw format: rst files.")
+
+(defun coleslaw-auto-insert (val)
+  "Set auto insertion of headers according to VAL.  Positive set it on, zero or negative turn it off."
+  (setq coleslaw--auto-insert (> val 0)))
+(defun coleslaw-markdown-mode (val)
+  "Set automatic markdown mode according to VAL.  Positive set it on, zero or negative turn it off."
+  (setq coleslaw--markdown-mode (> val 0)))
+(defun coleslaw-markdown-live (val)
+  "Set automatic markdown live preview according to VAL.  Positive set it on, zero or negative turn it off."
+  (setq coleslaw--markdown-live (> val 0)))
+(defun coleslaw-html-mode (val)
+  "Set automatic markdown live preview according to VAL.  Positive set it on, zero or negative turn it off."
+  (setq coleslaw--html-mode (> val 0)))
+(defun coleslaw-lisp-mode (val)
+  "Set automatic Lisp mode selection according to VAL.  Positive set it on, zero or negative turn it off."
+  (setq coleslaw--lisp-mode (> val 0)))
+(defun coleslaw-rst-mode (val)
+  "Set automatic rst mode selection according to VAL.  Positive set it on, zero or negative turn it off."
+  (setq coleslaw--rst-mode (> val 0)))
+
+(defun coleslaw-setup ()
+  "Setup your coleslaw like the Author suggests (conservative edits only).
+Strongly recommended!  Set M-; to `coleslaw-insert-header', enable
+auto insertion for .page and .post files, enable markdown mode
+and live preview."
+  (require 'markdown-mode)
+  (require 'autoinsert)
+  (require 'lisp-mode)
+  (require 'sgml-mode)
+  (require 'rst)
+  (coleslaw-auto-insert 1)
+  (coleslaw-markdown-mode 1)
+  (coleslaw-markdown-live 1)
+  (coleslaw-lisp-mode 1)
+  (coleslaw-html-mode 1)
+  (coleslaw-rst-mode 1)
+  (dolist (type '(".page" ".post"))
+    (cl-pushnew (cons type 'coleslaw-insert-header) auto-insert-alist))
+  (add-hook 'coleslaw-mode-hook #'flyspell-mode)
+  (add-to-list 'auto-mode-alist '("\\.page\\'" . coleslaw-mode))
+  (add-to-list 'auto-mode-alist '("\\.post\\'" . coleslaw-mode))
+  (define-key coleslaw-mode-map (kbd "M-;") 'coleslaw-insert-header))
+
 (defun coleslaw--bufftype (type)
   "Determine if the file type of the current buffer is TYPE."
   (string-equal type (cl-subseq buffer-file-name (- (length buffer-file-name) 5))))
@@ -35,15 +94,14 @@
   ;; Note: skeleton-read doesn't return it's input so we need this
   (read-from-minibuffer "Format: " ))
 
-;;;###autoload
-(defun coleslaw-skeleton-insert ()
+(defun coleslaw--skeleton-insert ()
   "Insert the skeleton for this type of file with FORMAT filled in."
                                         ;  (beginning-of-buffer)
   (let ((format (coleslaw--format)))
     (skeleton-insert '(nil ";;;;;\ntitle: "
                            (skeleton-read "title: ")
                            "\nformat: "
-                           format
+                           str
                            (if (coleslaw--bufftype ".page")
                                "\nurl: "
                              "")
@@ -52,53 +110,31 @@
                              "")
                            "\ndate: "
                            (skeleton-read "date: ")
-                           "\n;;;;;\n"))
+                           "\n;;;;;\n") 0 format)
     format))
-
+;;;###autoload
 (defun coleslaw-insert-header ()
   "Spawn a skeleton as specified by default for a coleslaw file type.
 Automatically changes the mode.  FORMAT is filled into the
 skeleton and used to select the mode"
-  (let ((format (coleslaw-skeleton-insert)))
+  (let ((format (coleslaw--skeleton-insert)))
     (cond ((string-equal format "md")
-           (markdown-live-preview-mode))
+           (when coleslaw--markdown-mode (markdown-mode))
+           (when coleslaw--markdown-live (markdown-live-preview-mode)))
           ((string-equal format "cl-who")
-           (lisp-mode))
+           (when coleslaw--lisp-mode (lisp-mode)))
           ((string-equal format "html")
-           (html-mode))
+           (when coleslaw--html-mode (html-mode)))
           ((string-equal format "rst")
-           (markdown-mode))))
-  (forward-line)
-  (move-end-of-line 1))
-
-(defvar coleslaw-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "M-;") 'coleslaw-insert-header)
-    map)
-  "Keymap for COLESLAW major mode.")
+           (when coleslaw---rst-mode (rst-mode))))))
 
 ;;;###autoload
 (define-minor-mode coleslaw-mode "Edit coleslaw static content gloriously."
   :lighter " KRAUT"
-  (add-hook 'coleslaw-mode-hook #'flyspell-mode)
-  (run-hooks 'coleslaw-mode-hook)
   (use-local-map coleslaw-mode-map)
-  (setq minor-mode #'coleslaw-mode))
-
-(add-to-list 'auto-mode-alist '("\\.page\\'" . coleslaw-mode))
-
-(add-to-list 'auto-mode-alist '("\\.post\\'" . coleslaw-mode))
-
-(setf auto-insert t)
-
-(cl-pushnew (cons ".page" 'coleslaw-insert-header) auto-insert-alist)
-
-(cl-pushnew (cons ".post" 'coleslaw-insert-header) auto-insert-alist)
-
-(add-hook 'coleslaw-mode-hook 'auto-insert)
+  (auto-insert))
 
 ;; Should not to require these in case cl-who or otherwise is wanted, once it is implemented.
-(require 'markdown-mode)
 
 (autoload 'markdown-preview-eww "view markdown in w3m web browser.")
 
