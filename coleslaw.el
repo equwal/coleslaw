@@ -1,4 +1,4 @@
-;;; coleslaw-mode.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
+;;; coleslaw.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <spensertruexonline@example.com>
@@ -6,7 +6,7 @@
 ;; Version:  1.1.0
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
-;; URL: https://github.com/equwal/coleslaw-mode/
+;; URL: https://github.com/equwal/coleslaw/
 ;; Homepage: http://truex.eu
 ;; This file is not part of GNU Emacs.
 ;; This file is free software.
@@ -90,11 +90,11 @@ skeleton and used to select the mode"
 (pushnew (cons ".page" 'coleslaw-insert-header) auto-insert-alist)
 (pushnew (cons ".post" 'coleslaw-insert-header) auto-insert-alist)
 (add-hook 'coleslaw-mode-hook 'auto-insert)
-(provide 'coleslaw-mode)
+(provide 'coleslaw)
 ;; Should not to require these in case cl-who or otherwise is wanted, once it is implemented.
 (autoload 'markdown-mode "markdown-mode"
   "Major mode for editing Markdown files")
 (autoload 'markdown-preview-eww "view markdown in w3m web browser.")
-(provide 'coleslaw-mode)
+(provide 'coleslaw)
 
-;;; coleslaw-mode.el ends here
+;;; coleslaw.el ends here
