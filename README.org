@@ -19,14 +19,14 @@ date:
 -  [[https://github.com/niku/markdown-preview-eww][Markdown-preview-eww]] automatically opens a markdown preview on load up of a
   coleslaw-mode file.
 ** Install
-*** Install from Melpa (best)
+*** COMMENT From Melpa (best)
 =M-x package-list-packages=
-*** Install with [[https://github.com/quelpa/quelpa][Quelpa]]
+*** With [[https://github.com/quelpa/quelpa][Quelpa]]
 ** Optional dependencies
 -  For markdown syntax highlighting, [[https://jblevins.org/projects/markdown-mode/][markdown-mode]]
 -  For a preview of the markdown, [[https://github.com/niku/markdown-preview-eww][Markdown-preview-eww]].
 -  Note that [[https://github.com/niku/markdown-preview-eww][eww]] has special OS level dependencies.
-** TODO <2018-12-16 Sun>
+** TODO Todo  <2018-12-16 Sun>
 -  Bind emacs commands for interacting with coleslaw via [[https://common-lisp.net/project/slime/][slime]].
 -  Detect format line to enable correct mode in a non-new file.
 -  Allow for alternative preview mode
