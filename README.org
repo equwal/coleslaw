@@ -12,9 +12,6 @@ title:
 format: user selected, maybe md
 date:
 ;;;;;
-<!--more-->
-
-<!--more-->
 #+END_EXAMPLE
 
 -  =.page= and =.post= files automatically enable coleslaw-mode in emacs.
@@ -29,9 +26,7 @@ date:
 -  For markdown syntax highlighting, [[https://jblevins.org/projects/markdown-mode/][markdown-mode]]
 -  For a preview of the markdown, [[https://github.com/niku/markdown-preview-eww][Markdown-preview-eww]].
 -  Note that [[https://github.com/niku/markdown-preview-eww][eww]] has special OS level dependencies.
--  You might want to view the optional preview with =w3m=. If so, use:
-=(setq browse-url-browser-function 'w3m-goto-url)= or use
-=(setq browse-url-browser-function 'browse-url-firefox)= for firefox.
 ** TODO <2018-12-16 Sun>
 -  Bind emacs commands for interacting with coleslaw via [[https://common-lisp.net/project/slime/][slime]].
 -  Detect format line to enable correct mode in a non-new file.
+-  Allow for alternative preview mode

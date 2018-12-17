@@ -24,7 +24,9 @@
 ;;; Code:
 
 (defvar coleslaw-mode-hook nil)
+
 (require 'autoinsert)
+
 (defun coleslaw--bufftype (type)
   "Determine if the file type of the current buffer is TYPE."
   (string-equal type (cl-subseq buffer-file-name (- (length buffer-file-name) 5))))
@@ -35,15 +37,14 @@
   ;; Note: skeleton-read doesn't return it's input so we need this
   (read-from-minibuffer "Format: " ))
 
-;;;###autoload
-(defun coleslaw-skeleton-insert ()
+(defun coleslaw--skeleton-insert ()
   "Insert the skeleton for this type of file with FORMAT filled in."
                                         ;  (beginning-of-buffer)
   (let ((format (coleslaw--format)))
     (skeleton-insert '(nil ";;;;;\ntitle: "
                            (skeleton-read "title: ")
                            "\nformat: "
-                           format
+                           str
                            (if (coleslaw--bufftype ".page")
                                "\nurl: "
                              "")
@@ -52,15 +53,16 @@
                              "")
                            "\ndate: "
                            (skeleton-read "date: ")
-                           "\n;;;;;\n"))
+                           "\n;;;;;\n") 0 format)
     format))
-
+;;;###autoload
 (defun coleslaw-insert-header ()
   "Spawn a skeleton as specified by default for a coleslaw file type.
 Automatically changes the mode.  FORMAT is filled into the
 skeleton and used to select the mode"
-  (let ((format (coleslaw-skeleton-insert)))
+  (let ((format (coleslaw--skeleton-insert)))
     (cond ((string-equal format "md")
+           (markdown-mode)
            (markdown-live-preview-mode))
           ((string-equal format "cl-who")
            (lisp-mode))
