@@ -1,4 +1,4 @@
- ;;; coleslaw.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
+;;; coleslaw.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <spensertruexonline@example.com>
@@ -19,7 +19,7 @@
 ;; depending on the type of file, and is how the major mode is selected for
 ;; the file.  Meant to work for all formats supported by kingcons's
 ;; "coleslaw" static content generator.  Default enabled in .page and .post
-;; files. Automagically generates headers when opening new empty coleslaw files.
+;; files.  Automagically generates headers when opening new empty coleslaw files.
 
 ;;; Code:
 
