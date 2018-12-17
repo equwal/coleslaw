@@ -1,0 +1,37 @@
+* COLESLAW
+* An Emacs Minor Mode For [[https://github.com/kingcons/coleslaw][Coleslaw]], static content generator written in Common Lisp.
+
+** Features
+-  Automatically insert a header when opening new =.page= or =.post= files.
+-  `coleslaw-insert-header` (bound to =M-;=) inserts the comment block and *is
+  how the major mode is selected*.
+- =*.post= file would insert:
+#+BEGIN_EXAMPLE
+;;;;;
+title:
+format: user selected, maybe md
+date:
+;;;;;
+<!--more-->
+
+<!--more-->
+#+END_EXAMPLE
+
+-  =.page= and =.post= files automatically enable coleslaw-mode in emacs.
+-  [[https://www.emacswiki.org/emacs/FlySpell][Flyspell]] spell checking and [[https://jblevins.org/projects/markdown-mode/][Markdown major mode]] enabled.
+-  [[https://github.com/niku/markdown-preview-eww][Markdown-preview-eww]] automatically opens a markdown preview on load up of a
+  coleslaw-mode file.
+** Install
+*** Install from Melpa (best)
+=M-x package-list-packages=
+*** Install with [[https://github.com/quelpa/quelpa][Quelpa]]
+** Optional dependencies
+-  For markdown syntax highlighting, [[https://jblevins.org/projects/markdown-mode/][markdown-mode]]
+-  For a preview of the markdown, [[https://github.com/niku/markdown-preview-eww][Markdown-preview-eww]].
+-  Note that [[https://github.com/niku/markdown-preview-eww][eww]] has special OS level dependencies.
+-  You might want to view the optional preview with =w3m=. If so, use:
+=(setq browse-url-browser-function 'w3m-goto-url)= or use
+=(setq browse-url-browser-function 'browse-url-firefox)= for firefox.
+** TODO <2018-12-16 Sun>
+-  Bind emacs commands for interacting with coleslaw via [[https://common-lisp.net/project/slime/][slime]].
+-  Detect format line to enable correct mode in a non-new file.
