@@ -16,11 +16,10 @@
 
 ;;; Commentary:
 ;; Please add (coleslaw-setup) to your init file.
-;; coleslaw-insert-header (bound to M-;) inserts the comment block
-;; depending on the type of file, and is how the major mode is selected for
-;; the file.  Meant to work for all formats supported by kingcons's
-;; "coleslaw" static content generator.  Default enabled in .page and .post
-;; files.  Automagically generates headers when opening new empty coleslaw files.
+
+;; For the coleslaw static content generator, a minor mode which inserts the
+;; header, selects the major mode, and generally makes writing static content
+;; easier.
 
 ;;; Code:
 
