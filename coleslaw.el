@@ -61,6 +61,7 @@
   "Set automatic rst mode selection according to VAL.  Positive set it on, zero or negative turn it off."
   (setq coleslaw--rst-mode (> val 0)))
 
+;;;###autoload
 (defun coleslaw-setup ()
   "Setup your coleslaw like the Author suggests (conservative edits only).
 Strongly recommended!  Set M-; to `coleslaw-insert-header', enable
