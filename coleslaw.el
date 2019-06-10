@@ -1,15 +1,15 @@
 ;;; coleslaw.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2018 Spenser Truex
-;; Author: Spenser Truex <spensertruexonline@example.com>
-;; Created: Equwal 2018-12-09
-;; Version:  1.1.0
+;; Author: Spenser Truex <web@spensertruex.com>
+;; Created: equwal 2018-12-09
+;; Version:  1.1.2 [2019-06-09]
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
 ;; URL: https://github.com/equwal/coleslaw/
-;; Homepage: http://truex.eu
-;; This file is not part of GNU Emacs.
-;; This file is free software.
+;; Homepage: https://spensertruex.com/org-mode-support-with-coleslaw
+;; This file is not part of GNU Emacs, but you want to use  GNU Emacs to run it.
+;; This file is very free software.
 ;; License:
 ;; Licensed with the GNU GPL v3 see:
 ;; <https://www.gnu.org/licenses/>.
@@ -110,7 +110,8 @@ and live preview."
                              "")
                            "\ndate: "
                            (skeleton-read "date: ")
-                           "\n;;;;;\n") 0 format)
+                           "\n;;;;;") 0 format)
+    (move-end-of-line 0)
     format))
 ;;;###autoload
 (defun coleslaw-insert-header ()
