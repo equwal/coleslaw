@@ -203,25 +203,16 @@ git
 sitedir/stagedir:
 ...
 ```
-<<<<<<< HEAD
 
 and initialize git above it so that the sources are backed up, and not the
 generated site.  Git can be too slow for that,so making sure to only update
 those *source* files can save a lot of time. Add this to your .gitignore:
-=======
-Git can be too slow though, so making sure to only update the *source* files
-(and not the deployed html) can save a lot of time. Add this to your .gitignore:
->>>>>>> master
 
 stagedir/**
 
 **Example**: `(git-versioned stage commit upload)` or `(git-versioned stage commit)`
 
 ### Double Versioned
-<<<<<<< HEAD
-=======
->>>>>>> equwal/master
->>>>>>> master
 
 **Description**: Originally, this was Coleslaw's only deploy behavior.
   Instead of deploying directly to `:deploy-dir`, creates `.curr` and
@@ -231,7 +222,6 @@ stagedir/**
 
 **Example**: `(versioned)`
 
-<<<<<<< HEAD
 ### Hard Versioned
 
 **Description**: Makes a full backup of the server staging directory into a
@@ -239,15 +229,7 @@ backup folder every time the server is pushed. Space-expensive, so makes bzip2
 archives, labeled with the clock's universal time.
 
 **Example**: `(hard-versioned "/home/user/backups")`
-=======
-<<<<<<< HEAD
-### Hard Versioning
 
-**Description**: Makes a full backup of the server directory into a backup
-folder every time the server is pushed. Could be expensive.
-
-**Example**: `(hard-versioning "~/backups")`
-=======
 ### Hard Versioned
 
 **Description**: Makes a full backup of the server directory into a backup
@@ -255,8 +237,6 @@ folder every time the server is pushed. Space-expensive, so makes bzip2
 archives, labeled with the clock's universal time.
 
 **Example**: `(hard-versioned "/home/user/backups")`
->>>>>>> equwal/master
->>>>>>> master
 
 ## Wordpress Importer
 
