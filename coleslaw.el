@@ -7,7 +7,7 @@
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
 ;; URL: https://github.com/equwal/coleslaw/
-;; Homepage: https://spensertruex.com/org-mode-support-with-coleslaw
+;; Homepage: https://spensertruex.com/coleslaw-mode
 ;; This file is not part of GNU Emacs, but you want to use  GNU Emacs to run it.
 ;; This file is very free software.
 ;; License:
@@ -73,7 +73,6 @@ and live preview."
   (require 'rst)
   (coleslaw-auto-insert 1)
   (coleslaw-markdown-mode 1)
-  (coleslaw-markdown-live 1)
   (coleslaw-lisp-mode 1)
   (coleslaw-html-mode 1)
   (coleslaw-rst-mode 1)
@@ -88,31 +87,30 @@ and live preview."
   "Determine if the file type of the current buffer is TYPE."
   (string-equal type (cl-subseq buffer-file-name (- (length buffer-file-name) 5))))
 
-(defun coleslaw--format ()
-  "Read in FORMAT from the user and return it."
-  (interactive)
-  ;; Note: skeleton-read doesn't return it's input so we need this
-  (read-from-minibuffer "Format: " ))
-
 (defun coleslaw--skeleton-insert ()
   "Insert the skeleton for this type of file with FORMAT filled in."
                                         ;  (beginning-of-buffer)
-  (let ((format (coleslaw--format)))
-    (skeleton-insert '(nil ";;;;;\ntitle: "
-                           (skeleton-read "title: ")
-                           "\nformat: "
-                           str
-                           (if (coleslaw--bufftype ".page")
-                               "\nurl: "
-                             "")
-                           (if (coleslaw--bufftype ".page")
-                               (skeleton-read "url: ")
-                             "")
-                           "\ndate: "
-                           (skeleton-read "date: ")
-                           "\n;;;;;") 0 format)
-    (move-end-of-line 0)
-    format))
+  (skeleton-insert '(nil ";;;;;\ntitle: "
+                         (skeleton-read "title: ")
+                         "\nformat: "
+                         (seleton-read format)
+                         (if (coleslaw--bufftype ".page")
+                             "\nurl: "
+                           "")
+                         (if (coleslaw--bufftype ".page")
+                             (skeleton-read "url: ")
+                           "")
+                         (if (coleslaw--bufftype ".post")
+                             "\nexcerpt: "
+                           "")
+                         (if (coleslaw--bufftype ".post")
+                             (skeleton-read "excerpt: ")
+                           "")
+                         "\ndate: "
+                         (skeleton-read "date: ")
+                         "\n;;;;;") 0 format)
+  (move-end-of-line 0)
+  format))
 ;;;###autoload
 (defun coleslaw-insert-header ()
   "Spawn a skeleton as specified by default for a coleslaw file type.
@@ -131,7 +129,7 @@ skeleton and used to select the mode"
 
 ;;;###autoload
 (define-minor-mode coleslaw-mode "Edit coleslaw static content gloriously."
-  :lighter " KRAUT"
+  :lighter " CSLAW"
   (use-local-map coleslaw-mode-map)
   (auto-insert))
 
