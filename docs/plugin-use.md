@@ -183,23 +183,6 @@ CL-USER> (chirp:complete-authentication "4173325")
 
 ## Versioning Deploys
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-Either [automatic git interaction](#git-versioning),
-[double versioning](#double-versioning), or [hard versioning](#hard-versioning).
-
-### Git Versioning
-
-**Description**: Automatically stages, commits, and/or pushes the server's
-sources. Assumes that a git repository exists in the server's directory. Pushing
-is optional.
-
-**Example**: `(git-versioning 'stage 'commit 'push)` or `(git-versioning 'stage 'commit)`
-
-### Double Versioning
-=======
->>>>>>> master
 Either [automatic git interaction](#git-versioned),
 [double versioned](#double-versioned), or [hard versioned](#hard-versioned).
 
