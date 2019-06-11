@@ -110,7 +110,7 @@ and live preview."
                          (skeleton-read "date: ")
                          "\n;;;;;") 0 format)
   (move-end-of-line 0)
-  format))
+  format)
 ;;;###autoload
 (defun coleslaw-insert-header ()
   "Spawn a skeleton as specified by default for a coleslaw file type.
