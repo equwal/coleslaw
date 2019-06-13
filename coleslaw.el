@@ -217,7 +217,7 @@ therefore return NIL without evaluating the BODY code."
          ))
     (when header
       (coleslaw--mode-spawn ;; split at "format: " "\n"
-       ) 
+       )
       )))
 
 ;; Should not to require these in case cl-who or otherwise is wanted, once it is implemented.
