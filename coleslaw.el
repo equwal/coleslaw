@@ -3,7 +3,7 @@
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <web@spensertruex.com>
 ;; Created: equwal 2018-12-09
-;; Version: 0.1.3 [2019-06-15]
+;; Version: 0.2.0 [2019-06-15]
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
 ;; URL: https://github.com/equwal/coleslaw/
