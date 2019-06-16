@@ -3,7 +3,7 @@
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <web@spensertruex.com>
 ;; Created: 2019-06-16
-;; Version: 0.2.1
+;; Version: 0.2.2
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
 ;; URL: https://github.com/equwal/coleslaw/
@@ -57,7 +57,8 @@ date: 2019-06-15
   "Keymap for COLESLAW minor mode.")
 
 (defun coleslaw--valid-format (str)
-  (some #'string-equal str coleslaw-valid-formats))
+  (when (stringp str)
+    (some (lambda (x) (string-equal x str)) coleslaw-valid-formats)))
 
 (defun coleslaw-setup ()
   "Setup your coleslaw like the author suggests (conservative edits only).
@@ -112,17 +113,20 @@ file type."
                          "\ntitle: "
                          (skeleton-read "title: ")
                          "\nformat: "
-                         (let ((format (coleslaw--valid-format (skeleton-read "format: "))))
-                           (while (not format)
-                             (skeleton-read (concat "Format " format " isn't supported. Format: "))))
+                         (progn (setq v1 (skeleton-read "format: "))
+                                (while (not (coleslaw--valid-format v1))
+                                  (setq v1
+                                        (skeleton-read (concat "Format "
+                                                               v1
+                                                               " isn't supported. Format: ")))))
                          (if (coleslaw--bufftype ".page")
                              (concat "\nurl: " (skeleton-read "url: "))
                            "")
                          (if (coleslaw--bufftype ".post")
-                             (concat "\nexcerpt: "
-                                     (if (y-or-n-p "Insert excerpt? ")
-                                 (skeleton-read "excerpt: ")
-                               ""))
+                             (if (y-or-n-p "Insert excerpt? ")
+                                 (concat "\nexcerpt: "
+                                         (skeleton-read "excerpt: "))
+                               "")
                            "")
                          "\ndate: "
                          (format-time-string "%Y-%m-%d" (current-time))
