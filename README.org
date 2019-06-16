@@ -1,3 +1,6 @@
+<<<<<<< HEAD
 * COLESLAW-MODE
 ** Documentation at [[https://spensertruex.com/coleslaw-mode][spensertruex.com/coleslaw-mode]].
 ** Source for documentation at [[https://github.com/equwal/coleslaw-mode-docs][github.com/equwal/coleslaw-mode-docs]].
+=======
+>>>>>>> d75f48a8603ae2b709d7aeb53b20eb18cc2bd146
