@@ -3,7 +3,7 @@
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <web@spensertruex.com>
 ;; Created: equwal 2018-12-09
-;; Version: 0.1.3 [2019-06-09]
+;; Version: 0.1.3 [2019-06-15]
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
 ;; URL: https://github.com/equwal/coleslaw/
@@ -61,7 +61,7 @@ auto insertion for .page and .post files, enable such basic editing modes as
 markdown-mode, lisp-mode, html-mode, and rst-mode based on the format header
 field."
   (dolist (type '(".page" ".post"))
-    (add-to-list 'auto-insert-alist (cons type 'coleslaw--insert-header)))
+    (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header)))
   (dolist (type '("\\.page\\'" "\\.post\\'"))
     (add-to-list 'auto-mode-alist (cons type 'coleslaw-mode)))
   (define-key coleslaw-mode-map (kbd "M-;") 'coleslaw-insert-header-or-dispatch)
@@ -79,7 +79,7 @@ it is already there."
   (interactive)
   (if (coleslaw--header-detected)
       (coleslaw--dispatch)
-    (coleslaw--insert-header)))
+    (coleslaw-insert-header)))
 
 (defun coleslaw--bufftype (type)
   "Determine if the file type of the current buffer is TYPE."
@@ -97,7 +97,7 @@ it is already there."
     (coleslaw--mode-spawn (coleslaw--header-field "format"))))
 
 ;;;###autoload
-(defun coleslaw--insert-header  ()
+(defun coleslaw-insert-header  ()
   "Insert the skeleton for as specified by default for a coleslaw
 file type."
   (skeleton-insert '(nil str
@@ -154,10 +154,6 @@ file type."
   (use-local-map coleslaw-mode-map)
   (auto-insert)
   (coleslaw--dispatch))
-
-;; Should not to require these in case cl-who or otherwise is wanted, once it is implemented.
-
-(autoload 'markdown-preview-eww "view markdown in w3m web browser.")
 
 (provide 'coleslaw)
 
