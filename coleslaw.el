@@ -2,8 +2,8 @@
 
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <web@spensertruex.com>
-;; Created: equwal 2018-12-09
-;; Version: 0.2.0 [2019-06-15]
+;; Created: 2019-06-16
+;; Version: 0.2.1
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
 ;; URL: https://github.com/equwal/coleslaw/
@@ -25,6 +25,8 @@
 ;;; Code:
 
 (defvar coleslaw-mode-hook nil)
+
+(defvar coleslaw-valid-formats (list "md" "cl-who" "rst" "html" "org"))
 
 (defvar coleslaw-header-separator ";;;;;"
   "The string used between the top and bottom of the coleslaw
@@ -54,12 +56,18 @@ date: 2019-06-15
   (make-sparse-keymap)
   "Keymap for COLESLAW minor mode.")
 
+(defun coleslaw--valid-format (str)
+  (some #'string-equal str coleslaw-valid-formats))
+
 (defun coleslaw-setup ()
   "Setup your coleslaw like the author suggests (conservative edits only).
 strongly recommended!  set M-; to `coleslaw-insert-header-or-dispatch', enable
 auto insertion for .page and .post files, enable such basic editing modes as
 markdown-mode, lisp-mode, html-mode, and rst-mode based on the format header
 field."
+  (setq auto-insert t)
+  (when (not (boundp 'auto-insert-alist))
+    (defvar auto-insert-alist nil))
   (dolist (type '(".page" ".post"))
     (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header)))
   (dolist (type '("\\.page\\'" "\\.post\\'"))
@@ -104,23 +112,22 @@ file type."
                          "\ntitle: "
                          (skeleton-read "title: ")
                          "\nformat: "
-                         (skeleton-read "format: ")
+                         (let ((format (coleslaw--valid-format (skeleton-read "format: "))))
+                           (while (not format)
+                             (skeleton-read (concat "Format " format " isn't supported. Format: "))))
                          (if (coleslaw--bufftype ".page")
-                             "\nurl: "
-                           "")
-                         (if (coleslaw--bufftype ".page")
-                             (skeleton-read "url: ")
+                             (concat "\nurl: " (skeleton-read "url: "))
                            "")
                          (if (coleslaw--bufftype ".post")
-                             "\nexcerpt: "
-                           "")
-                         (if (coleslaw--bufftype ".post")
-                             (skeleton-read "excerpt: ")
+                             (concat "\nexcerpt: "
+                                     (if (y-or-n-p "Insert excerpt? ")
+                                 (skeleton-read "excerpt: ")
+                               ""))
                            "")
                          "\ndate: "
-                         (skeleton-read "date: ")
-                         "\n"
-                         str) 0 (regexp-quote coleslaw-header-separator))
+                         (format-time-string "%Y-%m-%d" (current-time))
+			 "\n" str)
+		   0 (regexp-quote coleslaw-header-separator))
   (move-end-of-line 0)
   (coleslaw--dispatch))
 
