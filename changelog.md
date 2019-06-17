@@ -6,6 +6,7 @@ Spenser Truex
 - Test framework in tests.el.
 - Skeleton now does error checking on user input, and asks before inserting
   superfluous headers.
+- Date auto-inserts the current date in ISO8601 (2000-01-01 style) format.
 
 ## 0.1.3 2019-06-16
 - One-key interface (bound to `M-;`) now is
