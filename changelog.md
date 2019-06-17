@@ -2,7 +2,7 @@
 
 Spenser Truex
 
-## 2.0
+## 0.2.0
 - Test framework in tests.el.
 - Skeleton now does error checking on user input, and asks before inserting
   superfluous headers.
