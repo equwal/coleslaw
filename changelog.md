@@ -2,6 +2,10 @@
 
 Spenser Truex
 
+## 0.2.3
+- Dropped `M-;` keybinding, since coleslaw does what it needs to when opening a
+  new file.
+
 ## 0.2.0
 - Test framework in tests.el.
 - Skeleton now does error checking on user input, and asks before inserting
