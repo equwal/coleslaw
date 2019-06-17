@@ -3,7 +3,7 @@
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <web@spensertruex.com>
 ;; Created: 2019-06-16
-;; Version: 0.2.2
+;; Version: 0.2.3
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
 ;; URL: https://github.com/equwal/coleslaw/
@@ -52,19 +52,15 @@ date: 2019-06-15
           (\"rst\" . (rst-mode))))
   in your init file."))
 
-(defvar coleslaw-mode-map
-  (make-sparse-keymap)
-  "Keymap for COLESLAW minor mode.")
-
 (defun coleslaw--valid-format (str)
   (when (stringp str)
     (some (lambda (x) (string-equal x str)) coleslaw-valid-formats)))
 
 (defun coleslaw-setup ()
   "Setup your coleslaw like the author suggests (conservative edits only).
-strongly recommended!  set M-; to `coleslaw-insert-header-or-dispatch', enable
-auto insertion for .page and .post files, enable such basic editing modes as
-markdown-mode, lisp-mode, html-mode, and rst-mode based on the format header
+strongly recommended!  Enable auto insertion for .page and .post
+files, enable such basic editing modes as markdown-mode,
+lisp-mode, html-mode, and rst-mode based on the format header
 field."
   (setq auto-insert t)
   (when (not (boundp 'auto-insert-alist))
@@ -73,7 +69,6 @@ field."
     (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header)))
   (dolist (type '("\\.page\\'" "\\.post\\'"))
     (add-to-list 'auto-mode-alist (cons type 'coleslaw-mode)))
-  (define-key coleslaw-mode-map (kbd "M-;") 'coleslaw-insert-header-or-dispatch)
   (add-hook 'coleslaw-mode-hook 'coleslaw--dispatch)
   (setq coleslaw-default-format-modes
         '(("md" . (markdown-mode))
@@ -162,7 +157,6 @@ file type."
 ;;;###autoload
 (define-minor-mode coleslaw-mode "Edit coleslaw static content gloriously."
   :lighter " CSLAW"
-  (use-local-map coleslaw-mode-map)
   (auto-insert)
   (coleslaw--dispatch))
 
