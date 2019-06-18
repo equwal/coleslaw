@@ -23,9 +23,10 @@
 
 ;;; Code:
 
-(defvar coleslaw-mode-hook nil)
+(defvar coleslaw-mode-hook nil "Coleslaw-mode, for editing static web content.")
 
-(defvar coleslaw-formats (list "md" "cl-who" "rst" "html" "org"))
+(defvar coleslaw-formats (list "md" "cl-who" "rst" "html" "org")
+  "The format header values that coleslaw will allow to be auto-inserted.")
 
 (defvar coleslaw-separator ";;;;;"
   "The string used between the coleslaw headers as in the example:
@@ -161,8 +162,8 @@ Don't include the colon in the FIELD string (e.g. \"format\")."
 
 ;;;###autoload
 (define-minor-mode coleslaw-mode "Edit coleslaw static content gloriously."
-  :lighter " CSLAW"
-  (when (require 'autoload ) (auto-insert))
+  :lighter " Coleslaw"
+  (when (require 'autoload) (auto-insert))
   (coleslaw--dispatch))
 
 (provide 'coleslaw)
