@@ -1,4 +1,4 @@
-;;; coleslaw.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
+;;; coleslaw-mode.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <web@spensertruex.com>
 ;; Created: 2019-06-16
@@ -168,4 +168,4 @@ Don't include the colon in the FIELD string (e.g. \"format\")."
   (coleslaw--dispatch))
 
 (provide 'coleslaw)
-;;; coleslaw.el ends here
+;;; coleslaw-mode.el ends here
