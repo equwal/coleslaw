@@ -30,7 +30,7 @@
 
 (defvar coleslaw-header-separator ";;;;;"
   "The string used between the top and bottom of the coleslaw
-  headers, as in the example:
+ headers as in the example:
 ;;;;;
 title: Example
 format: cl-who
@@ -53,20 +53,19 @@ date: 2019-06-15
   in your init file."))
 
 (defun coleslaw--valid-format (str)
+  "Determine if the STR is permissible for a format: header in Coleslaw."
   (when (stringp str)
     (some (lambda (x) (string-equal x str)) coleslaw-valid-formats)))
 
 (defun coleslaw-setup ()
   "Setup your coleslaw like the author suggests (conservative edits only).
 strongly recommended!  Enable auto insertion for .page and .post
-files, enable such basic editing modes as markdown-mode,
-lisp-mode, html-mode, and rst-mode based on the format header
+files, enable such basic editing modes as `markdown-mode',
+`lisp-mode', `html-mode', and `rst-mode' based on the format header
 field."
-  (setq auto-insert t)
-  (when (not (boundp 'auto-insert-alist))
-    (defvar auto-insert-alist nil))
-  (dolist (type '(".page" ".post"))
-    (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header)))
+  (when (require 'autoinsert nil 'installed)
+    (dolist (type '(".page" ".post"))
+      (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header))))
   (dolist (type '("\\.page\\'" "\\.post\\'"))
     (add-to-list 'auto-mode-alist (cons type 'coleslaw-mode)))
   (add-hook 'coleslaw-mode-hook 'coleslaw--dispatch)
@@ -77,9 +76,8 @@ field."
           ("rst" . (rst-mode)))))
 
 (defun coleslaw-insert-header-or-dispatch ()
-  "Insert the coleslaw headers into this file if they don't
-already exist, or dispatch the modes based on 'format: MODE' if
-it is already there."
+  "Insert the coleslaw headers into this file if they don't already exist.
+Or dispatch the modes based on 'format: MODE' if it is already there."
   (interactive)
   (if (coleslaw--header-detected)
       (coleslaw--dispatch)
@@ -95,15 +93,13 @@ it is already there."
         (cdr (assoc format coleslaw-default-format-modes #'string-equal))))
 
 (defun coleslaw--dispatch ()
-  "Set modes based on this buffer's 'format: (md, cl-who, etc.)'
-  metadata line."
+  "Set modes based on this buffer's 'format: (md, cl-who, etc.)' metadata line."
   (when (coleslaw--header-detected)
     (coleslaw--mode-spawn (coleslaw--header-field "format"))))
 
 ;;;###autoload
 (defun coleslaw-insert-header  ()
-  "Insert the skeleton for as specified by default for a coleslaw
-file type."
+  "Insert the skeleton for as specified by default for a coleslaw file type."
   (skeleton-insert '(nil str
                          "\ntitle: "
                          (skeleton-read "title: ")
@@ -131,6 +127,9 @@ file type."
   (coleslaw--dispatch))
 
 (defun coleslaw--re-search-whole (regex &optional bound noerror count)
+  "Search forward and backwards from the point in the buffer for REGEX.
+BOUND, NOERROR, and COUNT are arguments to `re-search-forward'
+and `re-search-backward'."
   (let ((args (list regex bound noerror count)))
     (if (apply #'re-search-forward args)
         (match-string 1)
@@ -146,7 +145,8 @@ file type."
                           nil t)))
 
 (defun coleslaw--header-field (field)
-  "Search the current bufffer for the header field."
+  "Search the current bufffer for the header FIELD.
+Don't include the colon in the FIELD string (e.g. \"format\")."
   (when (coleslaw--header-detected)
     (coleslaw--re-search-whole (concatenate 'string
                                             field
@@ -161,5 +161,4 @@ file type."
   (coleslaw--dispatch))
 
 (provide 'coleslaw)
-
 ;;; coleslaw.el ends here
