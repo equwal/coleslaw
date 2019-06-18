@@ -1,9 +1,8 @@
 ;;; coleslaw.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
-
 ;; Copyright (C) 2018 Spenser Truex
 ;; Author: Spenser Truex <web@spensertruex.com>
 ;; Created: 2019-06-16
-;; Version: 0.2.3
+;; Version: 0.2.4
 ;; Package-Requires: ((emacs "24"))
 ;; Keywords: lisp wp files convenience
 ;; URL: https://github.com/equwal/coleslaw/
@@ -26,24 +25,29 @@
 
 (defvar coleslaw-mode-hook nil)
 
-(defvar coleslaw-valid-formats (list "md" "cl-who" "rst" "html" "org"))
+(defvar coleslaw-formats (list "md" "cl-who" "rst" "html" "org"))
 
-(defvar coleslaw-header-separator ";;;;;"
-  "The string used between the top and bottom of the coleslaw
- headers as in the example:
+(defvar coleslaw-separator ";;;;;"
+  "The string used between the coleslaw headers as in the example:
 ;;;;;
 title: Example
 format: cl-who
 date: 2019-06-15
-;;;;;")
+;;;;;
+Where the separator is \";;;;;\".")
+
+(defvar coleslaw-auto-insert (when (boundp 'coleslaw-auto-insert)
+                               coleslaw-auto-insert)
+  "Predicate to insert the skeleton on opening a new Coleslaw file type.
+unless the function `coleslaw-setup' is ran, when it is set to T.")
 
 (defvar coleslaw-default-format-modes nil
   (concatenate 'string
                "Modes based on the regex (special characters quoted)"
-               (regexp-quote coleslaw-header-separator)
+               (regexp-quote coleslaw-separator)
                "
   format: FORMAT
-" (regexp-quote coleslaw-header-separator) "
+" (regexp-quote coleslaw-separator) "
   headers in the coleslaw file. A simple default choice is:
   (setq coleslaw-default-format-modes
         '((\"md\" . (markdown-mode))
@@ -55,15 +59,17 @@ date: 2019-06-15
 (defun coleslaw--valid-format (str)
   "Determine if the STR is permissible for a format: header in Coleslaw."
   (when (stringp str)
-    (some (lambda (x) (string-equal x str)) coleslaw-valid-formats)))
+    (some (lambda (x) (string-equal x str)) coleslaw-formats)))
 
 (defun coleslaw-setup ()
   "Setup your coleslaw like the author suggests (conservative edits only).
 strongly recommended!  Enable auto insertion for .page and .post
-files, enable such basic editing modes as `markdown-mode',
-`lisp-mode', `html-mode', and `rst-mode' based on the format header
-field."
+files, enable such basic editing modes as the mode function
+`markdown-mode', the mode function `lisp-mode', the mode function
+`html-mode', or the mode function `rst-mode' based on the format
+header field.  Conservative additions only."
   (when (require 'autoinsert nil 'installed)
+    (setq coleslaw-auto-insert t)
     (dolist (type '(".page" ".post"))
       (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header))))
   (dolist (type '("\\.page\\'" "\\.post\\'"))
@@ -74,14 +80,6 @@ field."
           ("cl-who" . (lisp-mode))
           ("html" . (html-mode))
           ("rst" . (rst-mode)))))
-
-(defun coleslaw-insert-header-or-dispatch ()
-  "Insert the coleslaw headers into this file if they don't already exist.
-Or dispatch the modes based on 'format: MODE' if it is already there."
-  (interactive)
-  (if (coleslaw--header-detected)
-      (coleslaw--dispatch)
-    (coleslaw-insert-header)))
 
 (defun coleslaw--bufftype (type)
   "Determine if the file type of the current buffer is TYPE."
@@ -122,7 +120,7 @@ Or dispatch the modes based on 'format: MODE' if it is already there."
                          "\ndate: "
                          (format-time-string "%Y-%m-%d" (current-time))
 			 "\n" str)
-		   0 (regexp-quote coleslaw-header-separator))
+		   0 (regexp-quote coleslaw-separator))
   (move-end-of-line 0)
   (coleslaw--dispatch))
 
@@ -139,9 +137,9 @@ and `re-search-backward'."
 (defun coleslaw--header-detected ()
   "Detect if a header is already in the file."
   ;; pointer in fields, under fields, or in separator
-  (or (re-search-forward (regexp-quote coleslaw-header-separator)
+  (or (re-search-forward (regexp-quote coleslaw-separator)
                          nil t 1)
-      (re-search-backward (regexp-quote coleslaw-header-separator)
+      (re-search-backward (regexp-quote coleslaw-separator)
                           nil t)))
 
 (defun coleslaw--header-field (field)
@@ -157,7 +155,7 @@ Don't include the colon in the FIELD string (e.g. \"format\")."
 ;;;###autoload
 (define-minor-mode coleslaw-mode "Edit coleslaw static content gloriously."
   :lighter " CSLAW"
-  (auto-insert)
+  (when (require 'autoload ) (auto-insert))
   (coleslaw--dispatch))
 
 (provide 'coleslaw)
