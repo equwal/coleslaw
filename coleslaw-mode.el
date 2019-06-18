@@ -167,5 +167,5 @@ Don't include the colon in the FIELD string (e.g. \"format\")."
   (when (require 'autoload) (auto-insert))
   (coleslaw--dispatch))
 
-(provide 'coleslaw)
+(provide 'coleslaw-mode)
 ;;; coleslaw-mode.el ends here
