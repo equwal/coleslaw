@@ -42,7 +42,7 @@ Where the separator is \";;;;;\".")
   "Predicate to insert the skeleton on opening a new Coleslaw file type.
 unless the function `coleslaw-setup' is ran, when it is set to T.")
 
-(defvar coleslaw-default-format-modes nil
+(defvar coleslaw-modes nil
   (concatenate 'string
                "Modes based on the regex (special characters quoted)"
                (regexp-quote coleslaw-separator)
@@ -50,7 +50,7 @@ unless the function `coleslaw-setup' is ran, when it is set to T.")
   format: FORMAT
 " (regexp-quote coleslaw-separator) "
   headers in the coleslaw file. A simple default choice is:
-  (setq coleslaw-default-format-modes
+  (setq coleslaw-modes
         '((\"md\" . (markdown-mode))
           (\"cl-who\" . (lisp-mode))
           (\"html\" . (html-mode))
@@ -76,7 +76,7 @@ header field.  Conservative additions only."
   (dolist (type '("\\.page\\'" "\\.post\\'"))
     (add-to-list 'auto-mode-alist (cons type 'coleslaw-mode)))
   (add-hook 'coleslaw-mode-hook 'coleslaw--dispatch)
-  (setq coleslaw-default-format-modes
+  (setq coleslaw-modes
         '(("md" . (markdown-mode))
           ("cl-who" . (lisp-mode))
           ("html" . (html-mode))
@@ -89,7 +89,7 @@ header field.  Conservative additions only."
 (defun coleslaw--mode-spawn (format)
   "Select the mode for a file of type FORMAT."
   (mapc (lambda (mode) (funcall mode))
-        (cdr (assoc format coleslaw-default-format-modes #'string-equal))))
+        (cdr (assoc format coleslaw-modes #'string-equal))))
 
 (defun coleslaw--dispatch ()
   "Set modes based on this buffer's 'format: (md, cl-who, etc.)' metadata line."
