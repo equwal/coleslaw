@@ -76,11 +76,12 @@ header field.  Conservative additions only."
   (dolist (type '("\\.page\\'" "\\.post\\'"))
     (add-to-list 'auto-mode-alist (cons type 'coleslaw-mode)))
   (add-hook 'coleslaw-mode-hook 'coleslaw--dispatch)
-  (setq coleslaw-modes
-        '(("md" . (markdown-mode))
-          ("cl-who" . (lisp-mode))
-          ("html" . (html-mode))
-          ("rst" . (rst-mode)))))
+  (when (not coleslaw-modes)
+    (setq coleslaw-modes
+          '(("md" . (markdown-mode))
+            ("cl-who" . (lisp-mode))
+            ("html" . (html-mode))
+            ("rst" . (rst-mode))))))
 
 (defun coleslaw--bufftype (type)
   "Determine if the file type of the current buffer is TYPE."
