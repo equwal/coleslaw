@@ -95,6 +95,18 @@ header field.  Conservative additions only."
   (when (coleslaw--header-detected)
     (coleslaw--mode-spawn (coleslaw--header-field "format"))))
 
+(defun coleslaw--insist-format (first-prompt &optional second-prompt)
+  "Insist that the format inserted be a valid coleslaw format.
+Add formats to the `coleslaw-formats' list for new features or
+nonstandard formats.  FIRST-PROMPT and SECOND-PROMPT are used to
+prompt the user at the minibuffer.  The FIRST-PROMPT is for the
+first, and SECOND-PROMPT is used in subsequent requests.  If
+FIRST-PROMPT is NIL, the second-prompt is only used."
+  (let ((res (read-from-minibuffer (if first-prompt
+                                       first-prompt
+                                     second-prompt))))
+    (if (not (coleslaw--valid-format res))
+        (coleslaw--insist-format nil second-prompt))))
 ;;;###autoload
 (defun coleslaw-insert-header  ()
   "Insert the skeleton for as specified by default for a coleslaw file type."
@@ -102,12 +114,8 @@ header field.  Conservative additions only."
                          "\ntitle: "
                          (skeleton-read "title: ")
                          "\nformat: "
-                         (progn (setq v1 (skeleton-read "format: "))
-                                (while (not (coleslaw--valid-format v1))
-                                  (setq v1
-                                        (skeleton-read (concat "Format "
-                                                               v1
-                                                               " isn't supported. Format: ")))))
+                         (coleslaw--insist-format "format: "
+                                                  "Bad format, try another format: ")
                          (if (coleslaw--bufftype ".page")
                              (concat "\nurl: " (skeleton-read "url: "))
                            "")
@@ -121,7 +129,6 @@ header field.  Conservative additions only."
                          (format-time-string "%Y-%m-%d" (current-time))
 			 "\n" str)
 		   0 (regexp-quote coleslaw-separator))
-  (move-end-of-line 0)
   (coleslaw--dispatch))
 
 (defun coleslaw--re-search-whole (regex &optional bound noerror count)
