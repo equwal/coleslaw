@@ -2,10 +2,8 @@
 #+AUTHOR: Spenser Truex
 #+EMAIL: web@spensertruex.com
 Provide mode-selection and skeleton insertion for the [[https://github.com/kingcons/coleslaw][Coleslaw static content generator]].
-Add
-```emacs-lisp
-(coleslaw-setup)
-```
+Add =(coleslaw-setup)=.
+
 to your init file.
 
 * Documentation at [[https://spensertruex.com/coleslaw-mode][spensertruex.com/coleslaw-mode]].
