@@ -6,5 +6,5 @@ Add =(coleslaw-setup)=.
 
 to your init file.
 
-* Documentation at [[https://spensertruex.com/coleslaw-mode][spensertruex.com/coleslaw-mode]].
-* Source for documentation at [[https://github.com/equwal/coleslaw-mode-docs][github.com/equwal/coleslaw-mode-docs]].
+*** Documentation at [[https://spensertruex.com/coleslaw-mode][spensertruex.com/coleslaw-mode]].
+*** Source for documentation at [[https://github.com/equwal/coleslaw-mode-docs][github.com/equwal/coleslaw-mode-docs]].
