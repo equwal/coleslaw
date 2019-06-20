@@ -2,6 +2,11 @@
 
 Spenser Truex
 
+## 0.2.4
+- Used `package-lint`, `checkdoc`, and `flycheck`, and renamed the package to
+  coleslaw-mode from coleslaw.
+- Renamed some long variables, and documented them for user edits [on the docs](https://spensertruex.com/coleslaw-mode).
+
 ## 0.2.3
 - Dropped `M-;` keybinding, since coleslaw does what it needs to when opening a
   new file.
