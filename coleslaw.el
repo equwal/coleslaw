@@ -162,8 +162,8 @@ Don't include the colon in the FIELD string (e.g. \"format\")."
 (define-minor-mode coleslaw-mode "Edit coleslaw static content gloriously."
   :lighter " Coleslaw"
   (when coleslaw-auto-insert
-    (require 'autoinsert)
-    (auto-insert))
+    (with eval-after-load 'autoinsert
+      (auto-insert)))
   (coleslaw--dispatch))
 
 (provide 'coleslaw)
