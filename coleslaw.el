@@ -63,6 +63,7 @@ unless the function `coleslaw-setup' is ran, when it is set to T.")
   (when (stringp str)
     (cl-some (lambda (x) (string-equal x str)) coleslaw-formats)))
 
+;;;###autoload
 (defun coleslaw-setup ()
   "Setup your coleslaw like the author suggests (conservative edits only).
 strongly recommended!  Enable auto insertion for .page and .post
@@ -70,10 +71,12 @@ files, enable such basic editing modes as the mode function
 `markdown-mode', the mode function `lisp-mode', the mode function
 `html-mode', or the mode function `rst-mode' based on the format
 header field.  Conservative additions only."
-  (dolist (type '(".page" ".post"))
-    (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header)))
-  (dolist (type '("\\.page\\'" "\\.post\\'"))
-    (add-to-list 'auto-mode-alist (cons type 'coleslaw-mode)))
+  (setq coleslaw-auto-insert t)
+  (with-eval-after-load 'autoinsert
+    (dolist (type '(".page" ".post"))
+      (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header)))
+    (dolist (type '("\\.page\\'" "\\.post\\'"))
+      (add-to-list 'auto-mode-alist (cons type 'coleslaw-mode))))
   (add-hook 'coleslaw-mode-hook 'coleslaw--dispatch)
   (setq coleslaw-modes
         '(("md" . (markdown-mode))
@@ -162,7 +165,7 @@ Don't include the colon in the FIELD string (e.g. \"format\")."
 (define-minor-mode coleslaw-mode "Edit coleslaw static content gloriously."
   :lighter " Coleslaw"
   (when coleslaw-auto-insert
-    (with eval-after-load 'autoinsert
+    (with-eval-after-load 'autoinsert
       (auto-insert)))
   (coleslaw--dispatch))
 
