@@ -70,10 +70,8 @@ files, enable such basic editing modes as the mode function
 `markdown-mode', the mode function `lisp-mode', the mode function
 `html-mode', or the mode function `rst-mode' based on the format
 header field.  Conservative additions only."
-  (when (require 'autoinsert nil 'installed)
-    (setq coleslaw-auto-insert t)
-    (dolist (type '(".page" ".post"))
-      (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header))))
+  (dolist (type '(".page" ".post"))
+    (add-to-list 'auto-insert-alist (cons type 'coleslaw-insert-header)))
   (dolist (type '("\\.page\\'" "\\.post\\'"))
     (add-to-list 'auto-mode-alist (cons type 'coleslaw-mode)))
   (add-hook 'coleslaw-mode-hook 'coleslaw--dispatch)
@@ -163,7 +161,9 @@ Don't include the colon in the FIELD string (e.g. \"format\")."
 ;;;###autoload
 (define-minor-mode coleslaw-mode "Edit coleslaw static content gloriously."
   :lighter " Coleslaw"
-  (when (require 'autoload) (auto-insert))
+  (when coleslaw-auto-insert
+    (require 'autoinsert)
+    (auto-insert))
   (coleslaw--dispatch))
 
 (provide 'coleslaw)
