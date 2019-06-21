@@ -2,6 +2,9 @@
 
 Spenser Truex
 
+## 0.2.4
+- checkdoc, package-lint, flycheck all done for melpa submission.
+
 ## 0.2.3
 - Dropped `M-;` keybinding, since coleslaw does what it needs to when opening a
   new file.

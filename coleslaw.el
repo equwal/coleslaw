@@ -1,5 +1,5 @@
 ;;; coleslaw.el --- Coleslaw static content files. -*- lexical-binding: t; -*-
-;; Copyright (C) 2018 Spenser Truex
+;; Copyright (C) 2019 Spenser Truex
 ;; Author: Spenser Truex <web@spensertruex.com>
 ;; Created: 2019-06-16
 ;; Version: 0.2.4
