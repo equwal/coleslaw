@@ -23,6 +23,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (defvar coleslaw-mode-hook nil "Coleslaw-mode, for editing static web content.")
 
 (defvar coleslaw-formats (list "md" "cl-who" "rst" "html" "org")
@@ -43,9 +44,9 @@ Where the separator is \";;;;;\".")
 unless the function `coleslaw-setup' is ran, when it is set to T.")
 
 (defvar coleslaw-modes nil
-  (concatenate 'string
-               "Modes based on the regex (special characters quoted)"
-               (regexp-quote coleslaw-separator)
+  (concat
+   "Modes based on the regex (special characters quoted)"
+   (regexp-quote coleslaw-separator)
                "
   format: FORMAT
 " (regexp-quote coleslaw-separator) "
@@ -60,7 +61,7 @@ unless the function `coleslaw-setup' is ran, when it is set to T.")
 (defun coleslaw--valid-format (str)
   "Determine if the STR is permissible for a format: header in Coleslaw."
   (when (stringp str)
-    (some (lambda (x) (string-equal x str)) coleslaw-formats)))
+    (cl-some (lambda (x) (string-equal x str)) coleslaw-formats)))
 
 (defun coleslaw-setup ()
   "Setup your coleslaw like the author suggests (conservative edits only).
@@ -154,10 +155,9 @@ and `re-search-backward'."
   "Search the current bufffer for the header FIELD.
 Don't include the colon in the FIELD string (e.g. \"format\")."
   (when (coleslaw--header-detected)
-    (coleslaw--re-search-whole (concatenate 'string
-                                            field
-                                            ":"
-                                            "[\t ]*\\(?1:.*\\)\n")
+    (coleslaw--re-search-whole (concat field
+                                       ":"
+                                       "[\t ]*\\(?1:.*\\)\n")
                                nil t)))
 
 ;;;###autoload
