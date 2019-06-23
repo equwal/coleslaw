@@ -108,7 +108,8 @@ FIRST-PROMPT is NIL, the second-prompt is only used."
   (let ((res (read-from-minibuffer (if first-prompt
                                        first-prompt
                                      second-prompt))))
-    (if (not (coleslaw--valid-format res))
+    (if (coleslaw--valid-format res)
+        res
         (coleslaw--insist-format nil second-prompt))))
 ;;;###autoload
 (defun coleslaw-insert-header  ()
