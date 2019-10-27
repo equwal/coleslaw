@@ -1,6 +1,8 @@
 # Changelog
 
-Spenser Truex
+## 0.2.5
+- Pulled code from [Roman Hargrave](https://github.com/RomanHargrave "Thank you for your contribution.")'s branch.
+- Made the dispatcher external.
 
 ## 0.2.4
 - checkdoc, package-lint, flycheck all done for melpa submission.
@@ -26,3 +28,10 @@ Spenser Truex
 
 ## 0.0.1
 - Skeleton on open, with mode dispatch (but no mode dispatch on nonfresh files).
+
+# Contributors
+
+## Author/Maintainer
+Spenser Truex
+## Pulled code
+Roman Hargrave
