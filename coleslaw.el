@@ -29,6 +29,7 @@
 (require 'cl-lib)
 
 (defvar coleslaw-mode-hook nil "Coleslaw-mode, for editing static web content.")
+(defvar coleslaw-separator ";;;;;" "Character that separates keys and values in the coleslaw header")
 
 (defvar coleslaw-modes nil
   (concat
@@ -104,7 +105,7 @@ Don't include the colon in the FIELD string (e.g. \"format\")."
   :lighter " Coleslaw"
   (dolist (type '("\\.page\\'" "\\.post\\'"))
     (add-to-list 'auto-mode-alist (cons type 'coleslaw-mode)))
-  (coleslaw--dispatch))
+  (coleslaw-dispatch))
 
 (provide 'coleslaw)
 ;;; coleslaw.el ends here
