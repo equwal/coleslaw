@@ -62,7 +62,7 @@ header field.  Conservative additions only."
           ("html" . (html-mode))
           ("rst" . (rst-mode)))))
 
-(defun coleslaw--mode-spawn (format)
+(defun coleslaw-dispatch-format (format)
   "Select the mode for a file of type FORMAT."
   (mapc (lambda (mode) (funcall mode))
         (cdr (assoc format coleslaw-modes #'string-equal))))
@@ -71,7 +71,7 @@ header field.  Conservative additions only."
   "Set modes based on this buffer's 'format: (md, cl-who, etc.)' metadata line."
   (interactive)
   (when (coleslaw--header-detected)
-    (coleslaw--mode-spawn (coleslaw--header-field "format"))))
+    (coleslaw-dispatch-format (coleslaw--header-field "format"))))
 
 (defun coleslaw--re-search-whole (regex &optional bound noerror count)
   "Search forward and backwards from the point in the buffer for REGEX.
