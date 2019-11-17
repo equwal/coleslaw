@@ -142,6 +142,7 @@ files, enable such basic editing modes as the mode function
 `markdown-mode', the mode function `lisp-mode', the mode function
 `html-mode', or the mode function `rst-mode' based on the format
 header field.  Conservative additions only."
+  (interactive)
   (setq coleslaw-modes
         '(("md" . markdown-mode)
           ("cl-who" . lisp-mode)
@@ -151,9 +152,13 @@ header field.  Conservative additions only."
            do (add-to-list 'magic-mode-alist
                            (cons (coleslaw-mode-regex (car mode))
                                  (cdr mode))))
-
+  ;; This code only works if the user did a (require 'autoinsert)
   (setq auto-insert t)
-  (add-to-list 'auto-insert-alist '("\\.\\(page\\|post\\)\\'" . coleslaw-insert-header)))
+  ;; This does a lot of things other than setup coleslaw.
+  (add-hook 'find-file-hook 'auto-insert)
+  (add-to-list 'auto-insert-alist
+               '(("\\.\\(page\\|post\\)\\'" . "Coleslaw Header")
+                 coleslaw-insert-header)))
 
 (defvar coleslaw-formats (list "md" "cl-who" "rst" "html" "org")
   "The format header values that coleslaw will allow to be auto-inserted.")
