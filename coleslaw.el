@@ -151,9 +151,9 @@ header field.  Conservative additions only."
            do (add-to-list 'magic-mode-alist
                            (cons (coleslaw-mode-regex (car mode))
                                  (cdr mode))))
+
   (setq auto-insert t)
-  (add-to-list 'auto-insert-alist '("\\.page\\'" . coleslaw-insert-header))
-  (add-to-list 'auto-insert-alist '("\\.post\\'" . coleslaw-insert-header)))
+  (add-to-list 'auto-insert-alist '("\\.\\(page\\|post\\)\\'" . coleslaw-insert-header)))
 
 (defvar coleslaw-formats (list "md" "cl-who" "rst" "html" "org")
   "The format header values that coleslaw will allow to be auto-inserted.")
