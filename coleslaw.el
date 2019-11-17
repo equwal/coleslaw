@@ -151,8 +151,8 @@ header field.  Conservative additions only."
            do (add-to-list 'magic-mode-alist
                            (cons (coleslaw-mode-regex (car mode))
                                  (cdr mode))))
-  (add-to-list 'auto-insert-alist '("\\.page" . coleslaw-insert-header))
-  (add-to-list 'auto-insert-alist '("\\.post" . coleslaw-insert-header)))
+  (add-to-list 'auto-insert-alist '("\\.page\\'" . coleslaw-insert-header))
+  (add-to-list 'auto-insert-alist '("\\.post\\'" . coleslaw-insert-header)))
 
 (defun coleslaw--header-field (field)
   "Search the current bufffer for the header FIELD.
