@@ -155,14 +155,6 @@ header field.  Conservative additions only."
   (add-to-list 'auto-insert-alist '("\\.page\\'" . coleslaw-insert-header))
   (add-to-list 'auto-insert-alist '("\\.post\\'" . coleslaw-insert-header)))
 
-(defun coleslaw--header-field (field)
-  "Search the current bufffer for the header FIELD.
-Don't include the colon in the FIELD string (e.g. \"format\")."
-  (when (coleslaw--header-detected)
-    (coleslaw--re-search-whole (concat field
-                                       ":"
-                                       "[\t ]*\\(?1:.*\\)\n")
-                               nil t)))
 (defvar coleslaw-formats (list "md" "cl-who" "rst" "html" "org")
   "The format header values that coleslaw will allow to be auto-inserted.")
 
